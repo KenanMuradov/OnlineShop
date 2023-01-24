@@ -1,0 +1,40 @@
+﻿<Window x:Class="OnlineShop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OnlineShop"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <ComboBox
+                materialDesign:HintAssist.Hint="Category"
+                Margin="10"
+                Width="70">
+            </ComboBox>
+        </StackPanel>
+
+        <ListView Name="ProductsList" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="5" Text="{Binding Id}"></TextBlock>
+                        <TextBlock Margin="5" Text="{Binding Name}"></TextBlock>
+                        <TextBlock Margin="5" Text="{Binding Price}"></TextBlock>
+                        <TextBlock Margin="5" Text="{Binding CategoryID}"></TextBlock>
+                        <TextBlock Margin="5" Text="{Binding Quantity}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+    </Grid>
+</Window>
