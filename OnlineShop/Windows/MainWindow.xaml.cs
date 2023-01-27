@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using WPFCustomMessageBox;
 
 namespace OnlineShop;
 
@@ -161,6 +162,8 @@ public partial class MainWindow : Window
 
     private void ProductsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
+        CustomMessageBox.ShowOKCancel("What You Want To Do?","Next Step","Update Product","Delete");
+
         if (ProductsList.SelectedItem is DataRowView rowView)
         {
             var row = rowView.Row;

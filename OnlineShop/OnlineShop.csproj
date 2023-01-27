@@ -23,6 +23,7 @@
     <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.2.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="WPFCustomMessageBox" Version="1.0.7" />
   </ItemGroup>
 
 </Project>
