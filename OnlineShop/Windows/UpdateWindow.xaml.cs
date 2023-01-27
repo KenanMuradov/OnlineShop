@@ -93,8 +93,7 @@ public partial class UpdateWindow : Window
 
             var command = connection?.CreateCommand();
 
-            if (command is null)
-                return;
+            ArgumentNullException.ThrowIfNull(command);
 
             var tran = connection?.BeginTransaction();
 

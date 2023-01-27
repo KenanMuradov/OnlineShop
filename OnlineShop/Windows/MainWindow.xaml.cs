@@ -116,8 +116,7 @@ public partial class MainWindow : Window
 
                 var command = connection?.CreateCommand();
 
-                if (command is null)
-                    return;
+                ArgumentNullException.ThrowIfNull(command);
 
                 var tran = connection?.BeginTransaction();
 
@@ -172,7 +171,6 @@ public partial class MainWindow : Window
         if (result == MessageBoxResult.Cancel)
             return;
 
-        MessageBox.Show(ProductsList.SelectedIndex.ToString());
 
         if (result == MessageBoxResult.Yes)
         {
@@ -180,10 +178,10 @@ public partial class MainWindow : Window
             var row = (ProductsList.Items[index] as DataRowView)?.Row;
 
             var productId = Convert.ToInt32(row?["Id"]);
-            var name = row["Name"].ToString();
-            var price = Convert.ToDecimal(row["Price"]);
-            var quantity = Convert.ToInt32(row["Quantity"]);
-            var categoryId = Convert.ToInt32(row["CategoryId"]);
+            var name = row?["Name"].ToString();
+            var price = Convert.ToDecimal(row?["Price"]);
+            var quantity = Convert.ToInt32(row?["Quantity"]);
+            var categoryId = Convert.ToInt32(row?["CategoryId"]);
 
             UpdateWindow updateWindow = new(connection, dataSet?.Tables["Categories"], name, quantity, price, categoryId, productId);
 
@@ -220,7 +218,11 @@ public partial class MainWindow : Window
                 command.Parameters["productId"].Value = productId;
                 await command.ExecuteNonQueryAsync();
 
+                dataSet?.Clear();
+                if (dataSet is not null)
+                    adapter?.Fill(dataSet);
 
+                ProductsList.ItemsSource = dataSet?.Tables["Products"]?.AsDataView();
             }
             catch (Exception ex)
             {
