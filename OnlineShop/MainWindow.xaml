@@ -16,25 +16,88 @@
 
         <StackPanel Orientation="Horizontal">
             <ComboBox
+                Name="CBoxCategories"
                 materialDesign:HintAssist.Hint="Category"
+                ItemsSource="{Binding}"
                 Margin="10"
-                Width="70">
+                Width="70" 
+                SelectionChanged="CBoxCategories_SelectionChanged"
+                >
             </ComboBox>
+
+            <TextBox
+                x:Name="SearchTxt"
+            Grid.Column="1"
+            Margin="8 0 0 0"
+            materialDesign:HintAssist.Hint="Search"
+            BorderThickness="0"
+            MinWidth="150"
+            VerticalAlignment="Center"
+            TextChanged="SearchTxt_TextChanged"/>
         </StackPanel>
 
         <ListView Name="ProductsList" Grid.Row="1">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" Text="{Binding Id}"></TextBlock>
-                        <TextBlock Margin="5" Text="{Binding Name}"></TextBlock>
-                        <TextBlock Margin="5" Text="{Binding Price}"></TextBlock>
-                        <TextBlock Margin="5" Text="{Binding CategoryID}"></TextBlock>
-                        <TextBlock Margin="5" Text="{Binding Quantity}"></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="IsSelected" Value="True"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Id}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Price}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Quantity">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Quantity}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Rating">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Rating}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Your Rate" Width="165">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <materialDesign:RatingBar
+                                 x:Name="BasicRatingBar"
+                                 Value="0"
+                                 ValueChanged="BasicRatingBar_ValueChanged"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+
         </ListView>
-        
+
     </Grid>
 </Window>
