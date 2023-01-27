@@ -86,7 +86,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        var view = dataView.CreateDataView(dataSet?.Tables["Products"]);
+        var view = dataView?.CreateDataView(dataSet?.Tables?["Products"]);
 
         view.RowFilter = $"Name LIKE '%{SearchTxt.Text}%'";
 
@@ -104,8 +104,12 @@ public partial class MainWindow : Window
 
     private void BasicRatingBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if(sender is RatingBar ratingBar)
+        if (sender is RatingBar ratingBar)
         {
+            var index = ProductsList.SelectedIndex;
+            var row = (ProductsList.Items[index] as DataRowView)?.Row;
+
+            var productId = Convert.ToInt32(row?["Id"]);
             try
             {
                 connection?.Open();
@@ -123,7 +127,7 @@ public partial class MainWindow : Window
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.Add("productId", SqlDbType.Int);
-                command.Parameters["productId"].Value = ProductsList.SelectedIndex+1;
+                command.Parameters["productId"].Value = productId;
 
                 command.Parameters.Add("rating", SqlDbType.Int);
                 command.Parameters["rating"].Value = ratingBar.Value;
@@ -149,26 +153,33 @@ public partial class MainWindow : Window
 
         addWindow.ShowDialog();
 
-        if(addWindow.DialogResult is true)
+        if (addWindow.DialogResult is true)
         {
             dataSet?.Clear();
 
-            adapter?.Fill(dataSet);
+            if (dataSet is not null)
+                adapter?.Fill(dataSet);
 
             ProductsList.ItemsSource = dataSet?.Tables["Products"]?.AsDataView();
         }
-       
+
     }
 
-    private void ProductsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    private async void ProductsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        CustomMessageBox.ShowOKCancel("What You Want To Do?","Next Step","Update Product","Delete");
+        var result = CustomMessageBox.ShowYesNoCancel("What You Want To Do?", "Next Step", "Update Product", "Delete", "Cancel");
 
-        if (ProductsList.SelectedItem is DataRowView rowView)
+        if (result == MessageBoxResult.Cancel)
+            return;
+
+        MessageBox.Show(ProductsList.SelectedIndex.ToString());
+
+        if (result == MessageBoxResult.Yes)
         {
-            var row = rowView.Row;
+            var index = ProductsList.SelectedIndex;
+            var row = (ProductsList.Items[index] as DataRowView)?.Row;
 
-            var productId = Convert.ToInt32(row["Id"]);
+            var productId = Convert.ToInt32(row?["Id"]);
             var name = row["Name"].ToString();
             var price = Convert.ToDecimal(row["Price"]);
             var quantity = Convert.ToInt32(row["Quantity"]);
@@ -178,13 +189,46 @@ public partial class MainWindow : Window
 
             updateWindow.ShowDialog();
 
-            if(updateWindow.DialogResult is true)
+            if (updateWindow.DialogResult is true)
             {
                 dataSet?.Clear();
-
-                adapter?.Fill(dataSet);
+                if (dataSet is not null)
+                    adapter?.Fill(dataSet);
 
                 ProductsList.ItemsSource = dataSet?.Tables["Products"]?.AsDataView();
+            }
+        }
+        else if (result == MessageBoxResult.No)
+        {
+            var index = ProductsList.SelectedIndex;
+            var row = (ProductsList.Items[index] as DataRowView)?.Row;
+
+            var productId = Convert.ToInt32(row?["Id"]);
+
+            try
+            {
+                connection?.Open();
+
+                var command = connection?.CreateCommand();
+
+                ArgumentNullException.ThrowIfNull(command);
+
+                command.CommandText = "usp_DeleteProduct";
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("productId", SqlDbType.Int);
+                command.Parameters["productId"].Value = productId;
+                await command.ExecuteNonQueryAsync();
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
             }
         }
     }

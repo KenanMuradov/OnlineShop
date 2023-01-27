@@ -46,6 +46,9 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="IsSelected" Value="True"/>
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="IsSelected" Value="True"/>
                         </Trigger>
