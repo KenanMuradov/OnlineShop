@@ -7,24 +7,25 @@
         xmlns:local="clr-namespace:OnlineShop.Windows"
         mc:Ignorable="d"
         Title="AddWindow" Height="450" Width="800" Loaded="Window_Loaded">
-    <Grid Background="#1B182A">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Background="#1B182A">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <TextBlock Style="{StaticResource CustomTextBlock}" Text="Product Name"/>
-        <TextBox Grid.Row="1" Style="{StaticResource CustomTextBox}" Text="{Binding ProductName,UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Style="{StaticResource CustomTextBlock}" Text="Product Name"/>
+            <TextBox Grid.Row="1" Style="{StaticResource CustomTextBox}" Text="{Binding ProductName,UpdateSourceTrigger=PropertyChanged}"/>
 
-        <TextBlock Grid.Row="2" Style="{StaticResource CustomTextBlock}" Text="Category"/>
-        <ComboBox Grid.Row="3" 
+            <TextBlock Grid.Row="2" Style="{StaticResource CustomTextBlock}" Text="Category"/>
+            <ComboBox Grid.Row="3" 
                   Name="CBoxCategories"
                   materialDesign:HintAssist.Hint="Category" 
                   Style="{StaticResource MaterialDesignComboBox}" 
@@ -37,35 +38,37 @@
 
 
 
-        <TextBlock Grid.Row="4" Style="{StaticResource CustomTextBlock}" Text="Quantity"/>
-        <TextBox Grid.Row="5" Style="{StaticResource CustomTextBox}" Text="{Binding Quantity,UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Row="4" Style="{StaticResource CustomTextBlock}" Text="Quantity"/>
+            <TextBox Grid.Row="5" Style="{StaticResource CustomTextBox}" Text="{Binding Quantity,UpdateSourceTrigger=PropertyChanged}"/>
 
-        <TextBlock Grid.Row="6" Style="{StaticResource CustomTextBlock}" Text="Price"/>
-        <TextBox Grid.Row="7" Style="{StaticResource CustomTextBox}" Text="{Binding Price,UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Row="6" Style="{StaticResource CustomTextBlock}" Text="Price"/>
+            <TextBox Grid.Row="7" Style="{StaticResource CustomTextBox}" Text="{Binding Price,UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Grid Grid.Row="8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-            <Button
+                <Button
                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
                 Width="100"
                 Content="Add"/>
 
-            <Button
+                <Button
                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
                 Width="100"
                 Content="Add" 
                 Click="ButtonAdd_Click"/>
 
-            <Button
+                <Button
                 Grid.Column="1"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
                 Width="100"
                 Content="Cancel"
                 Click="ButtonCancel_Click"/>
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer>
+    
 </Window>

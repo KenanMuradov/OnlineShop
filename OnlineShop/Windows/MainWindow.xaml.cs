@@ -90,16 +90,7 @@ public partial class MainWindow : Window
 
         view.RowFilter = $"Name LIKE '%{SearchTxt.Text}%'";
 
-
         ProductsList.ItemsSource = view;
-
-    }
-
-    private void SelectCurrentItem(object sender, MouseEventArgs e)
-    {
-        ListViewItem item = (ListViewItem)sender;
-        item.IsSelected = true;
-
     }
 
     private void BasicRatingBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -163,6 +154,14 @@ public partial class MainWindow : Window
         }
 
     }
+
+    private void ButtonReset_Click(object sender, RoutedEventArgs e)
+    {
+        CBoxCategories.SelectedIndex = -1;
+        SearchTxt.Text = string.Empty;
+    }
+
+    
 
     private async void ProductsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {

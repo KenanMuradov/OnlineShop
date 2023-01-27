@@ -8,6 +8,20 @@
         <Setter Property="FontSize" Value="26"/>
     </Style>
 
+    <Style TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                    <Border BorderThickness="0,0,0,1" BorderBrush="#94929E">
+                        <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
     <Style x:Key="CustomTextBox" TargetType="TextBox">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -16,6 +30,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="#94929E"/>
         <Setter Property="Background" Value="#1B182A"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1 "/>
         <Setter Property="FontSize" Value="26"/>
     </Style>
 
@@ -25,5 +40,6 @@
         <Setter Property="Foreground" Value="#94929E"/>
         <Setter Property="FontSize" Value="26"/>
     </Style>
+
 
 </ResourceDictionary>
