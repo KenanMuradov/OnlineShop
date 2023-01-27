@@ -165,6 +165,12 @@ public partial class MainWindow : Window
 
     private async void ProductsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
+        var index = ProductsList.SelectedIndex;
+
+        if (index == -1)
+            return;
+
+
         var result = CustomMessageBox.ShowYesNoCancel("What You Want To Do?", "Next Step", "Update Product", "Delete", "Cancel");
 
         if (result == MessageBoxResult.Cancel)
@@ -173,7 +179,7 @@ public partial class MainWindow : Window
 
         if (result == MessageBoxResult.Yes)
         {
-            var index = ProductsList.SelectedIndex;
+
             var row = (ProductsList.Items[index] as DataRowView)?.Row;
 
             var productId = Convert.ToInt32(row?["Id"]);
@@ -197,7 +203,7 @@ public partial class MainWindow : Window
         }
         else if (result == MessageBoxResult.No)
         {
-            var index = ProductsList.SelectedIndex;
+            
             var row = (ProductsList.Items[index] as DataRowView)?.Row;
 
             var productId = Convert.ToInt32(row?["Id"]);
