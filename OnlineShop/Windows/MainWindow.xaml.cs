@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.Configuration;
+using OnlineShop.Windows;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -73,7 +74,6 @@ public partial class MainWindow : Window
 
                 ProductsList.ItemsSource = view;
             }
-
         }
     }
 
@@ -138,6 +138,50 @@ public partial class MainWindow : Window
             finally
             {
                 connection?.Close();
+            }
+        }
+    }
+
+    private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+    {
+        AddWindow addWindow = new(connection, dataSet?.Tables["Categories"]);
+
+        addWindow.ShowDialog();
+
+        if(addWindow.DialogResult is true)
+        {
+            dataSet?.Clear();
+
+            adapter?.Fill(dataSet);
+
+            ProductsList.ItemsSource = dataSet?.Tables["Products"]?.AsDataView();
+        }
+       
+    }
+
+    private void ProductsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (ProductsList.SelectedItem is DataRowView rowView)
+        {
+            var row = rowView.Row;
+
+            var productId = Convert.ToInt32(row["Id"]);
+            var name = row["Name"].ToString();
+            var price = Convert.ToDecimal(row["Price"]);
+            var quantity = Convert.ToInt32(row["Quantity"]);
+            var categoryId = Convert.ToInt32(row["CategoryId"]);
+
+            UpdateWindow updateWindow = new(connection, dataSet?.Tables["Categories"], name, quantity, price, categoryId, productId);
+
+            updateWindow.ShowDialog();
+
+            if(updateWindow.DialogResult is true)
+            {
+                dataSet?.Clear();
+
+                adapter?.Fill(dataSet);
+
+                ProductsList.ItemsSource = dataSet?.Tables["Products"]?.AsDataView();
             }
         }
     }

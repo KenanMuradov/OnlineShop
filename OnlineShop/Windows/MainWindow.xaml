@@ -34,9 +34,15 @@
             MinWidth="150"
             VerticalAlignment="Center"
             TextChanged="SearchTxt_TextChanged"/>
+
+            <Button
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Content="Add New Product" 
+                Margin="10"
+                Click="ButtonAdd_Click"/>
         </StackPanel>
 
-        <ListView Name="ProductsList" Grid.Row="1">
+        <ListView Name="ProductsList" Grid.Row="1" MouseDoubleClick="ProductsList_MouseDoubleClick">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>
@@ -96,7 +102,7 @@
                 </GridView>
             </ListView.View>
 
-
+            
         </ListView>
 
     </Grid>
